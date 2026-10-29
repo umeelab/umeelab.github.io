@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sản phẩm · Umee Lab</title>
+<link rel="icon" href="assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&family=Unbounded:wght@600;800&display=swap">
+<link rel="stylesheet" href="style.css?v=926a313c">
+</head>
+<body>
+<header class="hd" id="hd"></header>
+<main class="wrap" id="pd"></main>
+<section class="wrap" id="related"><div class="sec-hd"><h2>Có thể bạn thích</h2><span class="mono">// cùng danh mục</span></div><div class="row" id="rel-list"></div></section>
+<footer id="ft"></footer>
+
+<script src="data.js?v=926a313c"></script>
+<script src="app.js?v=926a313c"></script>
+<script>
+shell();
+const h = $("#related h2"); h.innerHTML = SPARK + `<span>${h.textContent}</span>`;
+const p = S.products.find(x => x.id === new URLSearchParams(location.search).get("id"));
+if (!p) {
+  $("#pd").innerHTML = `<div class="empty" style="margin-top:40px">Không tìm thấy sản phẩm này. <a href="index.html" style="text-decoration:underline">Về trang chủ</a></div>`;
+  $("#related").hidden = true;
+} else {
+  document.title = `${p.name} · ${S.brand.name}`;
+  const imgs = p.images && p.images.length ? p.images : [""];
+  const specs = [["Danh mục", cat(p.category).name], ["Kích thước", p.size], ["Chất liệu", p.material], ["Màu có sẵn", p.colors], ["Thời gian in", S.printTime]].filter(r => r[1]);
+  $("#pd").innerHTML = `<div class="pd">
+    <div class="gal rv">
+      <div class="win"><div class="bar"><i></i><i></i><i></i><span>${esc(p.id)}.jpg</span></div>
+        <div class="main" id="main">${imgs.map((_, i) => `<div class="pic ${i ? "" : "on"}">${photo(p, i)}</div>`).join("")}
+        ${imgs.length > 1 ? `<button class="nav-l" aria-label="Ảnh trước" data-step="-1">←</button><button class="nav-r" aria-label="Ảnh sau" data-step="1">→</button><span class="count" id="count">1 / ${imgs.length}</span>` : ""}
+        ${p.images && p.images.length ? `<button class="zoom" aria-label="Phóng to ảnh">⤢</button>` : ""}</div></div>
+      ${imgs.length > 1 ? `<div class="thumbs">${imgs.map((src, i) => `<button class="${i ? "" : "on"}" data-i="${i}" aria-label="Ảnh ${i + 1}"><img src="${esc(src)}" alt=""></button>`).join("")}</div>` : ""}
+    </div>
+    <div class="info rv">
+      <span class="mono" style="color:var(--blue)">✦ ${esc(cat(p.category).name)}</span>
+      <h1>${esc(p.name)}</h1>
+      <div class="price"><b>${money(p.price)}</b></div>
+      <p style="margin-top:10px"><span class="st ${p.status}">${STATUS[p.status]}</span></p>
+      ${p.description ? `<p style="margin-top:16px">${esc(p.description)}</p>` : ""}
+      <dl class="specs">${specs.map(([k, v]) => `<div><dt>${k}</dt><dd>${esc(v)}</dd></div>`).join("")}</dl>
+      <div class="note-box">${SPARK}<span>Mỗi sản phẩm được in riêng sau khi bạn đặt, mất khoảng ${esc(S.printTime)} tùy kích thước và số lượng. Cảm ơn bạn đã kiên nhẫn chờ.</span></div>
+      <button class="btn pink" data-buy="${esc(p.id)}">${p.status === "out" ? "Hết hàng · Nhắn để hỏi lịch có hàng" : "Mua ngay"} →</button>
+      <br><a class="back" href="index.html">← Xem thêm sản phẩm</a>
+    </div></div>`;
+  // Bộ xem nhiều ảnh: ảnh nhỏ, mũi tên, phím ←/→, vuốt trên điện thoại, phóng to
+  const pics = document.querySelectorAll("#main .pic"), thumbs = document.querySelectorAll(".thumbs button");
+  let cur = 0;
+  const show = n => {
+    cur = (n + pics.length) % pics.length;
+    pics.forEach((el, i) => el.classList.toggle("on", i === cur));
+    thumbs.forEach((el, i) => el.classList.toggle("on", i === cur));
+    thumbs[cur]?.scrollIntoView({ block: "nearest", inline: "nearest" });
+    if ($("#count")) $("#count").textContent = `${cur + 1} / ${pics.length}`;
+    if ($("#lb.on")) $("#lb img").src = p.images[cur];
+  };
+  thumbs.forEach((b, i) => b.onclick = () => show(i));
+  document.querySelectorAll("[data-step]").forEach(b => b.onclick = () => show(cur + +b.dataset.step));
+  let sx = null;
+  $("#main").addEventListener("touchstart", e => sx = e.touches[0].clientX, { passive: true });
+  $("#main").addEventListener("touchend", e => { if (sx === null) return; const dx = e.changedTouches[0].clientX - sx; if (Math.abs(dx) > 40) show(cur + (dx < 0 ? 1 : -1)); sx = null; });
+  if ($(".zoom")) {
+    document.body.insertAdjacentHTML("beforeend", `<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Xem ảnh lớn"><img alt="${esc(p.name)}">
+      ${pics.length > 1 ? `<button class="nav-l" aria-label="Ảnh trước" data-lb="-1">←</button><button class="nav-r" aria-label="Ảnh sau" data-lb="1">→</button>` : ""}<button class="lb-x" aria-label="Đóng">×</button></div>`);
+    const lb = $("#lb");
+    const open = () => { $("img", lb).src = p.images[cur]; lb.classList.add("on"); $(".lb-x", lb).focus(); };
+    $(".zoom").onclick = open;
+    pics.forEach(el => el.onclick = open);
+    lb.onclick = e => { const s = e.target.closest("[data-lb]"); if (s) show(cur + +s.dataset.lb); else if (e.target === lb || e.target.closest(".lb-x")) lb.classList.remove("on"); };
+  }
+  document.addEventListener("keydown", e => {
+    if ($("#buy.on")) return;
+    if (e.key === "ArrowLeft") show(cur - 1);
+    if (e.key === "ArrowRight") show(cur + 1);
+    if (e.key === "Escape") $("#lb")?.classList.remove("on");
+  });
+  const rel = S.products.filter(x => x.category === p.category && x.id !== p.id);
+  $("#rel-list").innerHTML = (rel.length ? rel : S.products.filter(x => x.featured && x.id !== p.id)).map(cardHTML).join("");
+}
+reveal();
+</script>
+</body>
+</html>

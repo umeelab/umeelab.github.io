@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Umee Lab · Đồ in 3D</title>
+<meta name="description" content="Umee Lab - đồ in 3D xinh xắn dành riêng cho bạn. Xem sản phẩm và nhắn Instagram để đặt hàng.">
+<link rel="icon" href="assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&family=Unbounded:wght@600;800&display=swap">
+<link rel="stylesheet" href="style.css?v=926a313c">
+</head>
+<body>
+<header class="hd" id="hd"></header>
+
+<main>
+  <div class="hero wrap"><div class="win slider" id="slider"></div></div>
+  <div class="marquee" aria-hidden="true"><div id="mq"></div></div>
+
+  <section id="categories" class="wrap">
+    <div class="sec-hd rv"><h2>Danh mục</h2><span class="mono">// danh mục</span></div>
+    <div class="cats" id="cats"></div>
+  </section>
+
+  <section id="featured" class="wrap">
+    <div class="sec-hd rv"><h2>Đề xuất cho bạn</h2><span class="mono">// được yêu thích</span></div>
+    <div class="row" id="featured-list"></div>
+  </section>
+
+  <section id="all" class="wrap">
+    <div class="sec-hd rv"><h2>Tất cả sản phẩm</h2><span class="mono" id="count"></span></div>
+    <div class="tools">
+      <label class="search"><span aria-hidden="true">⌕</span><input id="q" type="search" placeholder="Tìm cốc decor, cuộn tai nghe…" aria-label="Tìm sản phẩm"></label>
+      <select class="chip" id="sort" aria-label="Sắp xếp">
+        <option value="">Mới nhất</option><option value="asc">Giá thấp → cao</option><option value="desc">Giá cao → thấp</option>
+      </select>
+    </div>
+    <div class="chips" id="filters"></div>
+    <div class="grid" id="all-list"></div>
+  </section>
+
+  <section id="faq" class="wrap">
+    <div class="sec-hd rv"><h2>Câu hỏi thường gặp</h2><span class="mono">// hỏi đáp</span></div>
+    <div class="faq" id="faq-list"></div>
+  </section>
+
+  <section id="contact" class="wrap">
+    <div class="sec-hd rv"><h2>Liên hệ Umee Lab</h2><span class="mono">// đặt hàng qua inbox</span></div>
+    <div class="socials" id="socials"></div>
+  </section>
+</main>
+
+<footer id="ft"></footer>
+
+<script src="data.js?v=926a313c"></script>
+<script src="app.js?v=926a313c"></script>
+<script>
+shell();
+document.querySelectorAll(".sec-hd h2").forEach(h => h.innerHTML = SPARK + `<span>${h.textContent}</span>`);
+
+// Banner: chỉ hiện ảnh bạn tải lên, tỉ lệ 3:1
+const sl = $("#slider");
+const bannerHTML = (b, i) => {
+  const img = `<img src="${esc(b.image)}" alt="${esc(b.alt)}" ${i ? 'loading="lazy"' : ""}>`;
+  return b.link ? `<a class="slide ${i ? "" : "on"}" href="${esc(b.link)}">${img}</a>` : `<div class="slide ${i ? "" : "on"}">${img}</div>`;
+};
+const banners = S.banners.filter(b => b.image);
+if (!banners.length) $(".hero").hidden = true;
+sl.innerHTML = `<div class="bar"><i></i><i></i><i></i><span>umeelab://chuong-trinh</span></div><div class="slides">${banners.map(bannerHTML).join("")}</div>
+  ${banners.length > 1 ? `<div class="dots">${banners.map((_, i) => `<button aria-label="Banner ${i + 1}" class="${i ? "" : "on"}"></button>`).join("")}</div>` : ""}`;
+const slides = sl.querySelectorAll(".slide"), dots = sl.querySelectorAll(".dots button");
+let cur = 0, timer;
+const go = n => { slides[cur].classList.remove("on"); dots[cur]?.classList.remove("on"); cur = (n + slides.length) % slides.length; slides[cur].classList.add("on"); dots[cur]?.classList.add("on"); };
+const auto = () => { clearInterval(timer); if (slides.length > 1) timer = setInterval(() => go(cur + 1), 5000); };
+dots.forEach((d, i) => d.onclick = () => { go(i); auto(); });
+// Vuốt trên điện thoại
+let sx = null;
+sl.addEventListener("touchstart", e => sx = e.touches[0].clientX, { passive: true });
+sl.addEventListener("touchend", e => { if (sx === null) return; const dx = e.changedTouches[0].clientX - sx; if (Math.abs(dx) > 40) { go(cur + (dx < 0 ? 1 : -1)); auto(); } sx = null; });
+auto();
+
+// Dải chữ chạy: lặp 2 nửa giống nhau để chạy liền mạch
+const half = Array(3).fill(S.marquee.map(t => `<span>${esc(t)} ${SPARK}</span>`).join("")).join("");
+$("#mq").innerHTML = half + half;
+
+// Danh mục
+let activeCat = "";
+const renderCats = () => $("#cats").innerHTML = S.categories.map(c => `<button class="cat ${c.id === activeCat ? "on" : ""}" data-cat="${esc(c.id)}"><span class="ic">${icon(c.icon)}</span><span><b>${esc(c.name)}</b><small>${S.products.filter(p => p.category === c.id).length} SẢN PHẨM</small></span></button>`).join("");
+$("#cats").onclick = e => { const b = e.target.closest("[data-cat]"); if (b) { activeCat = b.dataset.cat; renderAll(); $("#all").scrollIntoView(); } };
+
+$("#featured-list").innerHTML = S.products.filter(p => p.featured).map(cardHTML).join("");
+
+// Tất cả sản phẩm + lọc
+function renderAll() {
+  renderCats();
+  $("#filters").innerHTML = [{ id: "", name: "Tất cả" }, ...S.categories].map(c => `<button class="chip ${c.id === activeCat ? "on" : ""}" data-f="${esc(c.id)}">${esc(c.name)}</button>`).join("");
+  const q = $("#q").value.trim().toLowerCase(), sort = $("#sort").value;
+  let list = S.products.filter(p => (!activeCat || p.category === activeCat) && (!q || p.name.toLowerCase().includes(q)));
+  if (sort) list = [...list].sort((a, b) => sort === "asc" ? a.price - b.price : b.price - a.price);
+  $("#count").textContent = `// ${list.length} sản phẩm`;
+  $("#all-list").innerHTML = list.length ? list.map(cardHTML).join("") : `<div class="empty" style="grid-column:1/-1">Chưa có món nào khớp. Thử từ khóa khác nhé ✦</div>`;
+  reveal();
+}
+$("#filters").onclick = e => { const b = e.target.closest("[data-f]"); if (b) { activeCat = b.dataset.f; renderAll(); } };
+$("#q").oninput = renderAll; $("#sort").onchange = renderAll;
+renderAll();
+
+$("#faq-list").innerHTML = S.faq.map((f, i) => `<details class="rv" ${i ? "" : "open"}><summary>${esc(f.q)}</summary><p>${esc(f.a)}</p></details>`).join("");
+$("#socials").innerHTML = S.socials.map((s, i) => `<a class="win soc rv ${i ? "" : "first"}" href="${esc(s.url)}" target="_blank" rel="noopener">
+  ${socialIcon(s)}<b>${esc(s.label)}</b><span>${esc(s.handle)}</span>${s.note ? `<span class="note">${esc(s.note)}</span>` : ""}</a>`).join("");
+reveal();
+</script>
+</body>
+</html>
