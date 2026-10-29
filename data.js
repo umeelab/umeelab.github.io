@@ -7,7 +7,8 @@ window.SITE = {
   "logoFooter": "assets/logo-white.png",
   "favicon": "assets/favicon.png",
   "title": "Umee Lab · Đồ in 3D",
-  "description": "Umee Lab - đồ in 3D xinh xắn dành riêng cho bạn. Xem sản phẩm và nhắn Instagram để đặt hàng."
+  "description": "Umee Lab - đồ in 3D xinh xắn dành riêng cho bạn. Xem sản phẩm và nhắn Instagram để đặt hàng.",
+  "analytics": "0f115ffa048c4579a0ce42ade7105224"
  },
  "printTime": "3–7 ngày",
  "marquee": [

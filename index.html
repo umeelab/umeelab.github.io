@@ -8,7 +8,7 @@
 <link rel="icon" href="assets/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&family=Unbounded:wght@600;800&display=swap">
-<link rel="stylesheet" href="style.css?v=926a313c">
+<link rel="stylesheet" href="style.css?v=c7e52293">
 </head>
 <body>
 <header class="hd" id="hd"></header>
@@ -52,8 +52,8 @@
 
 <footer id="ft"></footer>
 
-<script src="data.js?v=926a313c"></script>
-<script src="app.js?v=926a313c"></script>
+<script src="data.js?v=c7e52293"></script>
+<script src="app.js?v=c7e52293"></script>
 <script>
 shell();
 document.querySelectorAll(".sec-hd h2").forEach(h => h.innerHTML = SPARK + `<span>${h.textContent}</span>`);
@@ -110,5 +110,6 @@ $("#socials").innerHTML = S.socials.map((s, i) => `<a class="win soc rv ${i ? ""
   ${socialIcon(s)}<b>${esc(s.label)}</b><span>${esc(s.handle)}</span>${s.note ? `<span class="note">${esc(s.note)}</span>` : ""}</a>`).join("");
 reveal();
 </script>
+<script>if(location.protocol==='https:'){var s=document.createElement('script');s.defer=true;s.src='https://static.cloudflareinsights.com/beacon.min.js';s.setAttribute('data-cf-beacon','{"token":"0f115ffa048c4579a0ce42ade7105224"}');document.head.appendChild(s)}</script>
 </body>
 </html>
