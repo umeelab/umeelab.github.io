@@ -12,17 +12,16 @@ window.SITE = {
  },
  "printTime": "3–7 ngày",
  "marquee": [
-  "NEW DROP",
-  "ẢNH THẬT 100%",
-  "MADE IN VIETNAM",
+  "NEW COLLECTION",
+  "MẪU ĐỘC QUYỀN",
   "NHẮN INSTA ĐỂ ĐẶT HÀNG"
  ],
  "socials": [
   {
    "id": "instagram",
    "label": "Instagram",
-   "handle": "@umeelab",
-   "url": "https://instagram.com/umeelab",
+   "handle": "@umeelab.official",
+   "url": "https://www.instagram.com/umeelab.official/",
    "note": "Phản hồi nhanh nhất"
   },
   {
@@ -79,7 +78,86 @@ window.SITE = {
    "icon": "earbuds"
   }
  ],
- "products": [],
+ "products": [
+  {
+   "id": "coc-decor-ruy-bang",
+   "name": "Cốc decor - Ruy Băng",
+   "category": "coc-decor",
+   "price": 70000,
+   "status": "in",
+   "featured": false,
+   "images": [],
+   "size": "",
+   "material": "",
+   "colors": "",
+   "description": ""
+  },
+  {
+   "id": "coc-decor-tui",
+   "name": "Cốc decor - Túi",
+   "category": "coc-decor",
+   "price": 85000,
+   "status": "in",
+   "featured": false,
+   "images": [],
+   "size": "",
+   "material": "",
+   "colors": "",
+   "description": ""
+  },
+  {
+   "id": "coc-decor-xep-ly",
+   "name": "Cốc decor - Xếp Ly",
+   "category": "coc-decor",
+   "price": 80000,
+   "status": "in",
+   "featured": false,
+   "images": [],
+   "size": "",
+   "material": "",
+   "colors": "",
+   "description": ""
+  },
+  {
+   "id": "cuon-tai-nghe-chan-meo",
+   "name": "Cuộn tai nghe - Chân Mèo",
+   "category": "cuon-tai-nghe",
+   "price": 85000,
+   "status": "in",
+   "featured": false,
+   "images": [],
+   "size": "",
+   "material": "",
+   "colors": "",
+   "description": ""
+  },
+  {
+   "id": "cuon-tai-nghe-ngoi-sao",
+   "name": "Cuộn tai nghe - Ngôi sao",
+   "category": "cuon-tai-nghe",
+   "price": 85000,
+   "status": "in",
+   "featured": false,
+   "images": [],
+   "size": "",
+   "material": "",
+   "colors": "",
+   "description": ""
+  },
+  {
+   "id": "coc-decor-tulip",
+   "name": "Cốc decor - Tulip",
+   "category": "coc-decor",
+   "price": 75000,
+   "status": "in",
+   "featured": false,
+   "images": [],
+   "size": "",
+   "material": "",
+   "colors": "",
+   "description": ""
+  }
+ ],
  "faq": [
   {
    "q": "Vì sao thời gian nhận hàng lâu hơn bình thường?",
@@ -88,10 +166,6 @@ window.SITE = {
   {
    "q": "Đặt hàng như thế nào?",
    "a": "Bấm nút \"Mua\" ở sản phẩm bạn thích rồi chọn kênh để nhắn. Instagram là nơi Umee Lab trả lời nhanh nhất. Nhớ gửi tên sản phẩm và màu bạn chọn nhé."
-  },
-  {
-   "q": "Ảnh trên web có phải ảnh thật không?",
-   "a": "Tất cả ảnh trên web đều là ảnh chụp sản phẩm thật. Màu thực tế có thể chênh lệch nhẹ do ánh sáng khi chụp và màn hình của bạn."
   }
  ]
 };
