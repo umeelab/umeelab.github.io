@@ -41,19 +41,14 @@ window.SITE = {
  ],
  "banners": [
   {
-   "image": "assets/demo/banner-1.svg",
+   "image": "uploads/92cb797c8b27d362bf9c.webp",
    "link": "#all",
    "alt": "Bộ sưu tập Thỏ Umee"
   },
   {
-   "image": "assets/demo/banner-2.svg",
+   "image": "uploads/3dd5c0781e4e4a377755.webp",
    "link": "#contact",
    "alt": "Cuộn tai nghe đủ màu"
-  },
-  {
-   "image": "assets/demo/banner-3.svg",
-   "link": "#all",
-   "alt": "Phụ kiện tai nghe"
   }
  ],
  "categories": [
@@ -96,7 +91,7 @@ window.SITE = {
    "id": "coc-decor-tui",
    "name": "Cốc decor - Túi",
    "category": "coc-decor",
-   "price": 85000,
+   "price": 75000,
    "status": "in",
    "featured": false,
    "images": [],
@@ -109,7 +104,7 @@ window.SITE = {
    "id": "coc-decor-xep-ly",
    "name": "Cốc decor - Xếp Ly",
    "category": "coc-decor",
-   "price": 80000,
+   "price": 75000,
    "status": "in",
    "featured": false,
    "images": [],
@@ -122,7 +117,7 @@ window.SITE = {
    "id": "cuon-tai-nghe-chan-meo",
    "name": "Cuộn tai nghe - Chân Mèo",
    "category": "cuon-tai-nghe",
-   "price": 85000,
+   "price": 65000,
    "status": "in",
    "featured": false,
    "images": [],
@@ -135,7 +130,7 @@ window.SITE = {
    "id": "cuon-tai-nghe-ngoi-sao",
    "name": "Cuộn tai nghe - Ngôi sao",
    "category": "cuon-tai-nghe",
-   "price": 85000,
+   "price": 65000,
    "status": "in",
    "featured": false,
    "images": [],
@@ -148,7 +143,7 @@ window.SITE = {
    "id": "coc-decor-tulip",
    "name": "Cốc decor - Tulip",
    "category": "coc-decor",
-   "price": 75000,
+   "price": 70000,
    "status": "in",
    "featured": false,
    "images": [],
