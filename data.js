@@ -120,7 +120,11 @@ window.SITE = {
    "price": 65000,
    "status": "in",
    "featured": false,
-   "images": [],
+   "images": [
+    "uploads/3057bc084b86f996f314.webp",
+    "uploads/bcf6179239f334ea4a38.webp",
+    "uploads/858cda666056ef422d88.webp"
+   ],
    "size": "",
    "material": "",
    "colors": "",
