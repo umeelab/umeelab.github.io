@@ -70,7 +70,8 @@ function shell() {
     const p = S.products.find(x => x.id === btn.dataset.buy);
     last = btn;
     $("#buy-name").textContent = p.name;
-    const msg = `Chào Umee Lab, mình muốn đặt: ${p.name} (${money(p.price)})`;
+    const color = $(".swatches input:checked")?.value;
+    const msg = `Chào Umee Lab, mình muốn đặt: ${p.name} (${money(p.price)})${color ? ` - màu ${color}` : ""}`;
     $("#copied").textContent = "";
     navigator.clipboard?.writeText(msg).then(() => $("#copied").textContent = "✓ Đã copy: " + msg, () => {});
     modal.classList.add("on");

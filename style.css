@@ -204,6 +204,16 @@ footer img{height:46px}
 .specs div:last-child{border:0}
 .specs dt{color:var(--blue);font-weight:500}
 .specs dd{font-weight:600;text-align:right}
+.swatches{border:0;margin:22px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:10px}
+.swatches legend{width:100%;padding:0;margin-bottom:10px;color:var(--blue);font-weight:500}
+.swatches legend b{color:var(--ink)}
+.swatches label{cursor:pointer;position:relative}
+.swatches input{position:absolute;opacity:0}
+.swatches i{display:block;width:32px;height:32px;border-radius:50%;border:var(--line);box-shadow:var(--gloss);transition:transform .15s}
+.swatches label:hover i{transform:scale(1.1)}
+.swatches input:checked+i{outline:2.5px solid var(--pink);outline-offset:3px}
+.swatches input:focus-visible+i{outline:2.5px solid var(--blue-2);outline-offset:3px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .note-box{display:flex;gap:12px;padding:14px 16px;border-radius:var(--r);background:var(--g-soft);border:var(--line);font-size:14px;margin-bottom:24px}
 .note-box .spark{color:var(--pink);width:20px;height:20px;margin-top:2px}
 .back{display:inline-flex;gap:6px;font-weight:600;margin-top:20px}

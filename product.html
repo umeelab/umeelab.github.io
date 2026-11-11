@@ -7,7 +7,7 @@
 <link rel="icon" href="assets/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&family=Unbounded:wght@600;800&display=swap">
-<link rel="stylesheet" href="style.css?v=3e6d8b79">
+<link rel="stylesheet" href="style.css?v=a3d14da8">
 </head>
 <body>
 <header class="hd" id="hd"></header>
@@ -15,8 +15,8 @@
 <section class="wrap" id="related"><div class="sec-hd"><h2>Có thể bạn thích</h2><span class="mono">// cùng danh mục</span></div><div class="row" id="rel-list"></div></section>
 <footer id="ft"></footer>
 
-<script src="data.js?v=3e6d8b79"></script>
-<script src="app.js?v=3e6d8b79"></script>
+<script src="data.js?v=a3d14da8"></script>
+<script src="app.js?v=a3d14da8"></script>
 <script>
 shell();
 const h = $("#related h2"); h.innerHTML = SPARK + `<span>${h.textContent}</span>`;
@@ -27,7 +27,8 @@ if (!p) {
 } else {
   document.title = `${p.name} · ${S.brand.name}`;
   const imgs = p.images && p.images.length ? p.images : [""];
-  const specs = [["Danh mục", cat(p.category).name], ["Kích thước", p.size], ["Chất liệu", p.material], ["Màu có sẵn", p.colors], ["Thời gian in", S.printTime]].filter(r => r[1]);
+  const colors = (S.palette || []).filter(c => c.on);
+  const specs =[["Danh mục", cat(p.category).name], ["Kích thước", p.size], ["Chất liệu", p.material], ["Màu có sẵn", p.colors], ["Thời gian in", S.printTime]].filter(r => r[1]);
   $("#pd").innerHTML = `<div class="pd">
     <div class="gal rv">
       <div class="win"><div class="bar"><i></i><i></i><i></i><span>${esc(p.id)}.jpg</span></div>
@@ -42,11 +43,14 @@ if (!p) {
       <div class="price"><b>${money(p.price)}</b></div>
       <p style="margin-top:10px"><span class="st ${p.status}">${STATUS[p.status]}</span></p>
       ${p.description ? `<p style="margin-top:16px">${esc(p.description)}</p>` : ""}
+      ${colors.length ? `<fieldset class="swatches"><legend>Chọn màu <b id="sw-name"></b></legend>${colors.map(c =>
+        `<label title="${esc(c.name)}"><input type="radio" name="color" value="${esc(c.name)}"><i style="background:${esc(c.hex)}"></i><span class="sr">${esc(c.name)}</span></label>`).join("")}</fieldset>` : ""}
       <dl class="specs">${specs.map(([k, v]) => `<div><dt>${k}</dt><dd>${esc(v)}</dd></div>`).join("")}</dl>
       <div class="note-box">${SPARK}<span>Mỗi sản phẩm được in riêng sau khi bạn đặt, mất khoảng ${esc(S.printTime)} tùy kích thước và số lượng. Cảm ơn bạn đã kiên nhẫn chờ.</span></div>
       <button class="btn pink" data-buy="${esc(p.id)}">${p.status === "out" ? "Hết hàng · Nhắn để hỏi lịch có hàng" : "Mua ngay"} →</button>
       <br><a class="back" href="index.html">← Xem thêm sản phẩm</a>
     </div></div>`;
+  $(".swatches")?.addEventListener("change", e => $("#sw-name").textContent = "· " + e.target.value);
   // Bộ xem nhiều ảnh: ảnh nhỏ, mũi tên, phím ←/→, vuốt trên điện thoại, phóng to
   const pics = document.querySelectorAll("#main .pic"), thumbs = document.querySelectorAll(".thumbs button");
   let cur = 0;

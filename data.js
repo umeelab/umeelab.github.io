@@ -121,9 +121,9 @@ window.SITE = {
    "status": "in",
    "featured": false,
    "images": [
-    "uploads/3057bc084b86f996f314.webp",
-    "uploads/bcf6179239f334ea4a38.webp",
-    "uploads/858cda666056ef422d88.webp"
+    "uploads/71c0b93f456b87bc355a.webp",
+    "uploads/ac10982f08cdc3c4d822.webp",
+    "uploads/001e9c4dd2d4f3270959.webp"
    ],
    "size": "",
    "material": "",
