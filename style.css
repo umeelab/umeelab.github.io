@@ -78,8 +78,13 @@ section.wrap{margin-top:48px}
 .sec-hd h2 .spark{color:var(--pink);width:.7em;height:.7em;animation:sway 3s ease-in-out infinite}
 .sec-hd .mono{color:var(--blue)}
 
+/* danh mục = cột trái, sản phẩm bên phải */
+.shop{margin-top:48px;display:grid;grid-template-columns:250px minmax(0,1fr);gap:32px;align-items:start}
+.shop-main>section+section{margin-top:48px}
+.side{position:sticky;top:96px}
+
 /* categories: compact */
-.cats{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
+.cats{display:grid;grid-template-columns:1fr;gap:14px}
 .cat{display:flex;align-items:center;gap:12px;padding:12px 14px;text-align:left;border:var(--line);border-radius:var(--r);background:#fff;box-shadow:3px 3px 0 var(--ink);transition:transform .2s,box-shadow .2s}
 .cat:hover,.cat.on{transform:translateY(-4px);box-shadow:3px 7px 0 var(--ink)}
 .cat.on{background:var(--g-soft)}
@@ -229,6 +234,9 @@ footer img{height:46px}
   .menu-btn{display:block}
   .socials,.pd{grid-template-columns:1fr}
   .row{grid-auto-columns:minmax(180px,31%)}
+  .shop{grid-template-columns:1fr}
+  .side{position:static}
+  .cats{grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
 }
 /* điện thoại: mọi thứ gọn lại */
 @media (max-width:560px){
