@@ -18,8 +18,23 @@ window.SITE = {
  ],
  "palette": [
   {
-   "name": "Hồng Pastel",
+   "name": "Hồng",
    "hex": "#ffb3c9",
+   "on": true
+  },
+  {
+   "name": "Xanh",
+   "hex": "#b3e5ff",
+   "on": true
+  },
+  {
+   "name": "Tím",
+   "hex": "#f6c7ff",
+   "on": true
+  },
+  {
+   "name": "Trắng",
+   "hex": "#ffffff",
    "on": true
   }
  ],
