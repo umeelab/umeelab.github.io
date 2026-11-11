@@ -16,6 +16,13 @@ window.SITE = {
   "MẪU ĐỘC QUYỀN",
   "NHẮN INSTA ĐỂ ĐẶT HÀNG"
  ],
+ "palette": [
+  {
+   "name": "Hồng Pastel",
+   "hex": "#ffb3c9",
+   "on": true
+  }
+ ],
  "socials": [
   {
    "id": "instagram",
