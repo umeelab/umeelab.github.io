@@ -103,7 +103,9 @@ window.SITE = {
    "price": 70000,
    "status": "in",
    "featured": false,
-   "images": [],
+   "images": [
+    "uploads/832f4767ccef50f05c0f.webp"
+   ],
    "size": "",
    "material": "",
    "colors": "",
@@ -116,7 +118,9 @@ window.SITE = {
    "price": 75000,
    "status": "in",
    "featured": false,
-   "images": [],
+   "images": [
+    "uploads/b08fc5974bc6e2b8b914.webp"
+   ],
    "size": "",
    "material": "",
    "colors": "",
@@ -129,7 +133,9 @@ window.SITE = {
    "price": 75000,
    "status": "in",
    "featured": false,
-   "images": [],
+   "images": [
+    "uploads/710b570e90054a2b709c.webp"
+   ],
    "size": "",
    "material": "",
    "colors": "",
@@ -172,7 +178,9 @@ window.SITE = {
    "price": 70000,
    "status": "in",
    "featured": false,
-   "images": [],
+   "images": [
+    "uploads/b7f6ad64c2dfd5688800.webp"
+   ],
    "size": "",
    "material": "",
    "colors": "",
