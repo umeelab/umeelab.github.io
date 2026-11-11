@@ -117,7 +117,7 @@ window.SITE = {
    "category": "coc-decor",
    "price": 75000,
    "status": "in",
-   "featured": false,
+   "featured": true,
    "images": [
     "uploads/b08fc5974bc6e2b8b914.webp"
    ],
