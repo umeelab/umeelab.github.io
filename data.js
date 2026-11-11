@@ -119,7 +119,7 @@ window.SITE = {
    "category": "cuon-tai-nghe",
    "price": 65000,
    "status": "in",
-   "featured": false,
+   "featured": true,
    "images": [
     "uploads/71c0b93f456b87bc355a.webp",
     "uploads/ac10982f08cdc3c4d822.webp",
