@@ -265,12 +265,17 @@ footer img{height:46px}
   .sec-hd h2{font-size:19px;gap:8px}
   .sec-hd .mono{font-size:10px}
   .mono{font-size:10px}
-  .cats{grid-template-columns:1fr 1fr;gap:8px}
-  .cat{gap:8px;padding:8px 10px;box-shadow:2px 2px 0 var(--ink)}
-  .cat .ic{width:32px;height:32px;border-width:1.5px}
-  .cat .ic .ico{width:17px;height:17px}
-  .cat b{font-size:12.5px}
-  .cat small{font-size:9px}
+  /* danh mục: 1 hàng nút nhỏ, vuốt ngang */
+  #categories{margin-top:20px}
+  #categories .sec-hd{margin-bottom:8px}
+  .cats{display:flex;gap:8px;overflow-x:auto;padding:2px 2px 8px;scrollbar-width:none}
+  .cats::-webkit-scrollbar{display:none}
+  .cat{flex:none;gap:6px;padding:4px 12px 4px 4px;border-radius:999px;border-width:1.5px;box-shadow:2px 2px 0 var(--ink)}
+  .cat:hover,.cat.on{transform:none;box-shadow:2px 2px 0 var(--ink)}
+  .cat .ic{width:26px;height:26px;border-width:1.5px}
+  .cat .ic .ico{width:14px;height:14px}
+  .cat b{font-size:12.5px;white-space:nowrap}
+  .cat small{display:none}
   .grid{grid-template-columns:1fr 1fr;gap:10px}
   .row{grid-auto-columns:42%;gap:10px;padding:6px 4px 12px 1px}
   .card:hover{transform:translateY(-4px);box-shadow:3px 6px 0 var(--ink)}
