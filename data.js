@@ -50,7 +50,7 @@ window.SITE = {
    "id": "facebook",
    "label": "Facebook",
    "handle": "Umee Lab",
-   "url": "https://facebook.com/umeelab",
+   "url": "https://www.facebook.com/profile.php?id=61594600596549",
    "note": ""
   },
   {
@@ -102,9 +102,9 @@ window.SITE = {
    "category": "coc-decor",
    "price": 70000,
    "status": "in",
-   "featured": false,
+   "featured": true,
    "images": [
-    "uploads/832f4767ccef50f05c0f.webp"
+    "uploads/23c539d331cef45c0ad3.webp"
    ],
    "size": "",
    "material": "",
@@ -119,7 +119,7 @@ window.SITE = {
    "status": "in",
    "featured": true,
    "images": [
-    "uploads/b08fc5974bc6e2b8b914.webp"
+    "uploads/6d5bd478a8e31d103e06.webp"
    ],
    "size": "",
    "material": "",
@@ -134,7 +134,7 @@ window.SITE = {
    "status": "in",
    "featured": false,
    "images": [
-    "uploads/710b570e90054a2b709c.webp"
+    "uploads/867df57d81831473fa74.webp"
    ],
    "size": "",
    "material": "",
@@ -174,7 +174,9 @@ window.SITE = {
    "price": 75000,
    "status": "in",
    "featured": false,
-   "images": [],
+   "images": [
+    "uploads/3ff774384beb3c701d1a.webp"
+   ],
    "size": "",
    "material": "",
    "colors": "",
@@ -233,45 +235,6 @@ window.SITE = {
    "description": ""
   },
   {
-   "id": "coc-decor-ruy-bang",
-   "name": "Cốc decor - Ruy Băng",
-   "category": "coc-decor",
-   "price": 70000,
-   "status": "in",
-   "featured": false,
-   "images": [],
-   "size": "",
-   "material": "",
-   "colors": "",
-   "description": ""
-  },
-  {
-   "id": "coc-decor-tui",
-   "name": "Cốc decor - Túi",
-   "category": "coc-decor",
-   "price": 75000,
-   "status": "in",
-   "featured": true,
-   "images": [],
-   "size": "",
-   "material": "",
-   "colors": "",
-   "description": ""
-  },
-  {
-   "id": "coc-decor-xep-ly",
-   "name": "Cốc decor - Xếp Ly",
-   "category": "coc-decor",
-   "price": 75000,
-   "status": "in",
-   "featured": false,
-   "images": [],
-   "size": "",
-   "material": "",
-   "colors": "",
-   "description": ""
-  },
-  {
    "id": "cuon-tai-nghe-chan-meo",
    "name": "Cuộn tai nghe - Chân Mèo",
    "category": "cuon-tai-nghe",
@@ -309,7 +272,7 @@ window.SITE = {
    "status": "in",
    "featured": false,
    "images": [
-    "uploads/b7f6ad64c2dfd5688800.webp"
+    "uploads/61caa5929cffaefb9eb5.webp"
    ],
    "size": "",
    "material": "",
