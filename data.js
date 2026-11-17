@@ -93,9 +93,35 @@ window.SITE = {
    "id": "phu-kien-tai-nghe",
    "name": "Phụ kiện tai nghe",
    "icon": "earbuds"
+  },
+  {
+   "id": "phu-kien-kep-tai-nghe",
+   "name": "Phụ kiện kẹp tai nghe",
+   "icon": "star"
+  },
+  {
+   "id": "popsocket",
+   "name": "Popsocket",
+   "icon": "star"
   }
  ],
  "products": [
+  {
+   "id": "coc-decor-tulip",
+   "name": "Cốc decor - Tulip",
+   "category": "coc-decor",
+   "price": 70000,
+   "status": "in",
+   "featured": false,
+   "images": [
+    "uploads/61caa5929cffaefb9eb5.webp"
+   ],
+   "size": "",
+   "material": "",
+   "colors": "",
+   "description": "",
+   "skus": []
+  },
   {
    "id": "coc-decor-no-ruy-bang",
    "name": "Cốc decor - Nơ Ruy Băng",
@@ -109,7 +135,8 @@ window.SITE = {
    "size": "",
    "material": "",
    "colors": "",
-   "description": ""
+   "description": "",
+   "skus": []
   },
   {
    "id": "coc-decor-tui-lua",
@@ -124,7 +151,8 @@ window.SITE = {
    "size": "",
    "material": "",
    "colors": "",
-   "description": ""
+   "description": "",
+   "skus": []
   },
   {
    "id": "coc-decor-no-xep-ly",
@@ -134,105 +162,13 @@ window.SITE = {
    "status": "in",
    "featured": false,
    "images": [
-    "uploads/867df57d81831473fa74.webp"
+    "uploads/26873d9e21a4ba3f78d2.webp"
    ],
    "size": "",
    "material": "",
    "colors": "",
-   "description": ""
-  },
-  {
-   "id": "mo-hinh-ech-di-boi",
-   "name": "Mô hình - Ếch đi bơi",
-   "category": "mo-hinh",
-   "price": 30000,
-   "status": "in",
-   "featured": false,
-   "images": [],
-   "size": "",
-   "material": "",
-   "colors": "",
-   "description": ""
-  },
-  {
-   "id": "phu-kien-dan-tai-nghe-angel-wings",
-   "name": "Phụ kiện dán tai nghe Angel wings",
-   "category": "phu-kien-tai-nghe",
-   "price": 35000,
-   "status": "in",
-   "featured": false,
-   "images": [],
-   "size": "",
-   "material": "",
-   "colors": "",
-   "description": ""
-  },
-  {
-   "id": "coc-decor-nem-may",
-   "name": "Cốc decor - Nệm Mây",
-   "category": "coc-decor",
-   "price": 75000,
-   "status": "in",
-   "featured": false,
-   "images": [
-    "uploads/3ff774384beb3c701d1a.webp"
-   ],
-   "size": "",
-   "material": "",
-   "colors": "",
-   "description": ""
-  },
-  {
-   "id": "phu-kien-kep-tai-nghe-not-nhac-trai-tim",
-   "name": "Phụ kiện kẹp tai nghe - Nốt nhạc trái tim",
-   "category": "coc-decor",
-   "price": 15000,
-   "status": "in",
-   "featured": false,
-   "images": [],
-   "size": "",
-   "material": "",
-   "colors": "",
-   "description": ""
-  },
-  {
-   "id": "phu-kien-kep-tai-nghe-not-nhac-butterfly",
-   "name": "Phụ kiện kẹp tai nghe - Nốt nhạc butterfly",
-   "category": "phu-kien-tai-nghe",
-   "price": 15000,
-   "status": "in",
-   "featured": false,
-   "images": [],
-   "size": "",
-   "material": "",
-   "colors": "",
-   "description": ""
-  },
-  {
-   "id": "phu-kien-kep-tai-nghe-butterfly",
-   "name": "Phụ kiện kẹp tai nghe - Butterfly",
-   "category": "phu-kien-tai-nghe",
-   "price": 15000,
-   "status": "in",
-   "featured": false,
-   "images": [],
-   "size": "",
-   "material": "",
-   "colors": "",
-   "description": ""
-  },
-  {
-   "id": "phu-kien-kep-tai-nghe-flower",
-   "name": "Phụ kiện kẹp tai nghe - Flower",
-   "category": "phu-kien-tai-nghe",
-   "price": 15000,
-   "status": "in",
-   "featured": false,
-   "images": [],
-   "size": "",
-   "material": "",
-   "colors": "",
-   "description": ""
+   "description": "",
+   "skus": []
   },
   {
    "id": "cuon-tai-nghe-chan-meo",
@@ -249,7 +185,8 @@ window.SITE = {
    "size": "",
    "material": "",
    "colors": "",
-   "description": ""
+   "description": "",
+   "skus": []
   },
   {
    "id": "cuon-tai-nghe-ngoi-sao",
@@ -262,22 +199,206 @@ window.SITE = {
    "size": "",
    "material": "",
    "colors": "",
-   "description": ""
+   "description": "",
+   "skus": []
   },
   {
-   "id": "coc-decor-tulip",
-   "name": "Cốc decor - Tulip",
+   "id": "mo-hinh-ech-di-boi",
+   "name": "Mô hình - Ếch đi bơi",
+   "category": "mo-hinh",
+   "price": 30000,
+   "status": "in",
+   "featured": false,
+   "images": [],
+   "size": "",
+   "material": "",
+   "colors": "",
+   "description": "",
+   "skus": []
+  },
+  {
+   "id": "phu-kien-dan-tai-nghe-angel-wings",
+   "name": "Phụ kiện dán tai nghe Angel wings",
+   "category": "phu-kien-tai-nghe",
+   "price": 35000,
+   "status": "in",
+   "featured": false,
+   "images": [],
+   "size": "",
+   "material": "",
+   "colors": "",
+   "description": "",
+   "skus": []
+  },
+  {
+   "id": "coc-decor-nem-may",
+   "name": "Cốc decor - Nệm Mây",
    "category": "coc-decor",
-   "price": 70000,
+   "price": 75000,
    "status": "in",
    "featured": false,
    "images": [
-    "uploads/61caa5929cffaefb9eb5.webp"
+    "uploads/3ff774384beb3c701d1a.webp"
    ],
    "size": "",
    "material": "",
    "colors": "",
-   "description": ""
+   "description": "",
+   "skus": []
+  },
+  {
+   "id": "phu-kien-kep-tai-nghe-not-nhac-trai-tim",
+   "name": "Phụ kiện kẹp tai nghe - Nốt nhạc trái tim",
+   "category": "phu-kien-kep-tai-nghe",
+   "price": 15000,
+   "status": "in",
+   "featured": false,
+   "images": [],
+   "size": "",
+   "material": "",
+   "colors": "",
+   "description": "",
+   "skus": []
+  },
+  {
+   "id": "phu-kien-kep-tai-nghe-not-nhac-butterfly",
+   "name": "Phụ kiện kẹp tai nghe - Nốt nhạc butterfly",
+   "category": "phu-kien-kep-tai-nghe",
+   "price": 15000,
+   "status": "in",
+   "featured": false,
+   "images": [],
+   "size": "",
+   "material": "",
+   "colors": "",
+   "description": "",
+   "skus": []
+  },
+  {
+   "id": "phu-kien-kep-tai-nghe-butterfly",
+   "name": "Phụ kiện kẹp tai nghe - Butterfly",
+   "category": "phu-kien-kep-tai-nghe",
+   "price": 15000,
+   "status": "in",
+   "featured": false,
+   "images": [],
+   "size": "",
+   "material": "",
+   "colors": "",
+   "description": "",
+   "skus": []
+  },
+  {
+   "id": "phu-kien-kep-tai-nghe-flower",
+   "name": "Phụ kiện kẹp tai nghe - Flower",
+   "category": "phu-kien-kep-tai-nghe",
+   "price": 15000,
+   "status": "in",
+   "featured": false,
+   "images": [],
+   "size": "",
+   "material": "",
+   "colors": "",
+   "description": "",
+   "skus": []
+  },
+  {
+   "id": "phu-kien-kep-tai-nghe-angel-wings",
+   "name": "Phụ kiện kẹp tai nghe - Angel Wings",
+   "category": "phu-kien-kep-tai-nghe",
+   "price": null,
+   "status": "in",
+   "featured": false,
+   "images": [],
+   "size": "",
+   "material": "",
+   "colors": "",
+   "description": "",
+   "skus": []
+  },
+  {
+   "id": "popsocket-angel-rabbit",
+   "name": "Popsocket - Angel Rabbit",
+   "category": "popsocket",
+   "price": null,
+   "status": "in",
+   "featured": false,
+   "images": [],
+   "size": "",
+   "material": "",
+   "colors": "",
+   "description": "",
+   "skus": []
+  },
+  {
+   "id": "mo-hinh-vit-vo-tri-vit-cam",
+   "name": "Mô hình - Vịt vô tri (Vịt Cam)",
+   "category": "mo-hinh",
+   "price": null,
+   "status": "in",
+   "featured": false,
+   "images": [],
+   "size": "",
+   "material": "",
+   "colors": "",
+   "description": "",
+   "skus": []
+  },
+  {
+   "id": "mo-hinh-vit-vo-tri-vit-ech",
+   "name": "Mô hình - Vịt vô tri (Vịt Ếch)",
+   "category": "mo-hinh",
+   "price": null,
+   "status": "in",
+   "featured": false,
+   "images": [],
+   "size": "",
+   "material": "",
+   "colors": "",
+   "description": "",
+   "skus": []
+  },
+  {
+   "id": "mo-hinh-vit-vo-tri-vit-huong-duong",
+   "name": "Mô hình - Vịt vô tri (Vịt Hướng Dương)",
+   "category": "mo-hinh",
+   "price": null,
+   "status": "in",
+   "featured": false,
+   "images": [],
+   "size": "",
+   "material": "",
+   "colors": "",
+   "description": "",
+   "skus": []
+  },
+  {
+   "id": "mo-hinh-vit-vo-tri-vit-ca-map",
+   "name": "Mô hình - Vịt vô tri (Vịt Cá Mập)",
+   "category": "mo-hinh",
+   "price": null,
+   "status": "in",
+   "featured": false,
+   "images": [],
+   "size": "",
+   "material": "",
+   "colors": "",
+   "description": "",
+   "skus": []
+  },
+  {
+   "id": "mo-hinh-vit-vo-tri-vit-luoi",
+   "name": "Mô hình - Vịt vô tri (Vịt Lười)",
+   "category": "mo-hinh",
+   "price": null,
+   "status": "in",
+   "featured": false,
+   "images": [],
+   "size": "",
+   "material": "",
+   "colors": "",
+   "description": "",
+   "skus": []
   }
  ],
  "faq": [

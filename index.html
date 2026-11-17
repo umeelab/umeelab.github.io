@@ -8,7 +8,7 @@
 <link rel="icon" href="assets/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&family=Unbounded:wght@600;800&display=swap">
-<link rel="stylesheet" href="style.css?v=4c9cf701">
+<link rel="stylesheet" href="style.css?v=a1edef75">
 </head>
 <body>
 <header class="hd" id="hd"></header>
@@ -52,8 +52,8 @@
 
 <footer id="ft"></footer>
 
-<script src="data.js?v=4c9cf701"></script>
-<script src="app.js?v=4c9cf701"></script>
+<script src="data.js?v=a1edef75"></script>
+<script src="app.js?v=a1edef75"></script>
 <script>
 shell();
 document.querySelectorAll(".sec-hd h2").forEach(h => h.innerHTML = SPARK + `<span>${h.textContent}</span>`);
@@ -66,8 +66,10 @@ const bannerHTML = (b, i) => {
 };
 const banners = S.banners.filter(b => b.image);
 if (!banners.length) $(".hero").hidden = true;
-sl.innerHTML = `<div class="bar"><i></i><i></i><i></i><span>umeelab://chuong-trinh</span></div><div class="slides">${banners.map(bannerHTML).join("")}</div>
-  ${banners.length > 1 ? `<div class="dots">${banners.map((_, i) => `<button aria-label="Banner ${i + 1}" class="${i ? "" : "on"}"></button>`).join("")}</div>` : ""}`;
+// Chấm chuyển banner nằm trên thanh tiêu đề khung, không đè lên chữ trong ảnh
+sl.innerHTML = `<div class="bar"><i></i><i></i><i></i><span>umeelab://chuong-trinh</span>
+  ${banners.length > 1 ? `<div class="dots">${banners.map((_, i) => `<button aria-label="Banner ${i + 1}" class="${i ? "" : "on"}"></button>`).join("")}</div>` : ""}</div>
+  <div class="slides">${banners.map(bannerHTML).join("")}</div>`;
 const slides = sl.querySelectorAll(".slide"), dots = sl.querySelectorAll(".dots button");
 let cur = 0, timer;
 const go = n => { slides[cur].classList.remove("on"); dots[cur]?.classList.remove("on"); cur = (n + slides.length) % slides.length; slides[cur].classList.add("on"); dots[cur]?.classList.add("on"); };
@@ -91,6 +93,7 @@ const renderCats = () => $("#cats").innerHTML = usedCats.map(c => `<button class
 $("#cats").onclick = e => { const b = e.target.closest("[data-cat]"); if (b) { activeCat = b.dataset.cat; renderAll(); $("#all").scrollIntoView(); } };
 
 $("#featured-list").innerHTML = S.products.filter(p => p.featured).map(cardHTML).join("");
+rails();
 
 // Tất cả sản phẩm + lọc
 function renderAll() {
@@ -98,7 +101,10 @@ function renderAll() {
   $("#filters").innerHTML = [{ id: "", name: "Tất cả" }, ...usedCats].map(c => `<button class="chip ${c.id === activeCat ? "on" : ""}" data-f="${esc(c.id)}">${esc(c.name)}</button>`).join("");
   const q = $("#q").value.trim().toLowerCase(), sort = $("#sort").value;
   let list = S.products.filter(p => (!activeCat || p.category === activeCat) && (!q || p.name.toLowerCase().includes(q)));
-  if (sort) list = [...list].sort((a, b) => sort === "asc" ? a.price - b.price : b.price - a.price);
+  // Mặc định giữ thứ tự trong tool nhưng đưa món chưa có ảnh xuống cuối; sắp theo giá thì món "Liên hệ" luôn ở cuối
+  const hasImg = p => p.images && p.images.length ? 0 : 1, min = p => priceRange(p).min;
+  list = sort ? [...list].sort((a, b) => (min(a) == null) - (min(b) == null) || (sort === "asc" ? min(a) - min(b) : min(b) - min(a)))
+    : [...list].sort((a, b) => hasImg(a) - hasImg(b));
   $("#count").textContent = `// ${list.length} sản phẩm`;
   $("#all-list").innerHTML = list.length ? list.map(cardHTML).join("") : `<div class="empty" style="grid-column:1/-1">Chưa có món nào khớp. Thử từ khóa khác nhé ✦</div>`;
   reveal();

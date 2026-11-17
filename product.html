@@ -7,16 +7,16 @@
 <link rel="icon" href="assets/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&family=Unbounded:wght@600;800&display=swap">
-<link rel="stylesheet" href="style.css?v=4c9cf701">
+<link rel="stylesheet" href="style.css?v=a1edef75">
 </head>
-<body>
+<body class="pd-page">
 <header class="hd" id="hd"></header>
 <main class="wrap" id="pd"></main>
 <section class="wrap" id="related"><div class="sec-hd"><h2>Có thể bạn thích</h2><span class="mono">// cùng danh mục</span></div><div class="row" id="rel-list"></div></section>
 <footer id="ft"></footer>
 
-<script src="data.js?v=4c9cf701"></script>
-<script src="app.js?v=4c9cf701"></script>
+<script src="data.js?v=a1edef75"></script>
+<script src="app.js?v=a1edef75"></script>
 <script>
 shell();
 const h = $("#related h2"); h.innerHTML = SPARK + `<span>${h.textContent}</span>`;
@@ -28,6 +28,7 @@ if (!p) {
   document.title = `${p.name} · ${S.brand.name}`;
   const imgs = p.images && p.images.length ? p.images : [""];
   const colors = (S.palette || []).filter(c => c.on);
+  const skus = p.skus || [];
   const specs =[["Danh mục", cat(p.category).name], ["Kích thước", p.size], ["Chất liệu", p.material], ["Màu có sẵn", p.colors], ["Thời gian in", S.printTime]].filter(r => r[1]);
   $("#pd").innerHTML = `<div class="pd">
     <div class="gal rv">
@@ -40,17 +41,26 @@ if (!p) {
     <div class="info rv">
       <span class="mono" style="color:var(--blue)">✦ ${esc(cat(p.category).name)}</span>
       <h1>${esc(p.name)}</h1>
-      <div class="price"><b>${money(p.price)}</b></div>
-      <p style="margin-top:10px"><span class="st ${p.status}">${STATUS[p.status]}</span></p>
-      ${p.description ? `<p style="margin-top:16px">${esc(p.description)}</p>` : ""}
+      <div class="price"><b id="pd-price">${priceText(p)}</b></div>
+      <p class="pd-st"><span class="st ${p.status}" id="pd-st">${STATUS[p.status]}</span></p>
+      ${p.description ? `<p class="pd-desc">${esc(p.description)}</p>` : ""}
+      ${skus.length ? `<fieldset class="skus"><legend>Phân loại <b id="sku-name"></b></legend>${skus.map(s =>
+        `<label class="${s.status === "out" ? "out" : ""}"><input type="radio" name="sku" value="${esc(s.name)}" ${s.status === "out" ? "disabled" : ""}>${s.image ? `<img src="${esc(s.image)}" alt="">` : ""}<span>${esc(s.name)}</span></label>`).join("")}</fieldset>` : ""}
       ${colors.length ? `<fieldset class="swatches"><legend>Chọn màu <b id="sw-name"></b></legend>${colors.map(c =>
-        `<label title="${esc(c.name)}"><input type="radio" name="color" value="${esc(c.name)}"><i style="background:${esc(c.hex)}"></i><span class="sr">${esc(c.name)}</span></label>`).join("")}</fieldset>` : ""}
+        `<label title="${esc(c.name)}"><input type="radio" name="color" value="${esc(c.name)}"><i style="background:${esc(c.hex)}"></i><span>${esc(c.name)}</span></label>`).join("")}</fieldset>` : ""}
       <dl class="specs">${specs.map(([k, v]) => `<div><dt>${k}</dt><dd>${esc(v)}</dd></div>`).join("")}</dl>
       <div class="note-box">${SPARK}<span>Mỗi sản phẩm được in riêng sau khi bạn đặt, mất khoảng ${esc(S.printTime)} tùy kích thước và số lượng. Cảm ơn bạn đã kiên nhẫn chờ.</span></div>
-      <button class="btn pink" data-buy="${esc(p.id)}">${p.status === "out" ? "Hết hàng · Nhắn để hỏi lịch có hàng" : "Mua ngay"} →</button>
+      <button class="btn pink buy" data-buy="${esc(p.id)}">${p.status === "out" ? "Hết hàng · Nhắn để hỏi lịch có hàng" : "Mua ngay"} →</button>
       <br><a class="back" href="index.html">← Xem thêm sản phẩm</a>
     </div></div>`;
   $(".swatches")?.addEventListener("change", e => $("#sw-name").textContent = "· " + e.target.value);
+  // Chọn phân loại: đổi giá, trạng thái và chuyển tới ảnh của phân loại đó
+  $(".skus")?.addEventListener("change", e => {
+    const s = skus.find(x => x.name === e.target.value); if (!s) return;
+    $("#sku-name").textContent = "· " + s.name;
+    $("#pd-price").textContent = money(skuPrice(p, s));
+    const k = s.image ? p.images.indexOf(s.image) : -1; if (k >= 0) show(k);
+  });
   // Bộ xem nhiều ảnh: ảnh nhỏ, mũi tên, phím ←/→, vuốt trên điện thoại, phóng to
   const pics = document.querySelectorAll("#main .pic"), thumbs = document.querySelectorAll(".thumbs button");
   let cur = 0;
@@ -84,6 +94,7 @@ if (!p) {
   });
   const rel = S.products.filter(x => x.category === p.category && x.id !== p.id);
   $("#rel-list").innerHTML = (rel.length ? rel : S.products.filter(x => x.featured && x.id !== p.id)).map(cardHTML).join("");
+  rails();
 }
 reveal();
 </script>

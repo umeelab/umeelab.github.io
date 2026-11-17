@@ -2,7 +2,7 @@
 const S = window.SITE;
 const $ = (q, el = document) => el.querySelector(q);
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-const money = n => Number(n).toLocaleString("vi-VN") + "đ";
+const money = n => n == null ? "Liên hệ" : Number(n).toLocaleString("vi-VN") + "đ";
 const SPARK = '<svg class="spark" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 0C13 9 15 11 24 12 15 13 13 15 12 24 11 15 9 13 0 12 9 11 11 9 12 0Z"/></svg>';
 const STATUS = { in: "Còn hàng", out: "Hết hàng" };
 const ICON_PATHS = {
@@ -20,18 +20,26 @@ const link = p => `product.html?id=${encodeURIComponent(p.id)}`;
 
 function photo(p, i = 0) {
   return p.images && p.images[i]
-    ? `<img src="${esc(p.images[i])}" alt="${esc(p.name)}" loading="lazy">`
-    : `<div class="ph-fake" role="img" aria-label="Chưa có ảnh"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M6.3 17.7 17.7 6.3"/></svg></div>`;
+    ? `<img src="${esc(p.images[i])}" alt="${esc(p.name)}" loading="lazy" decoding="async">`
+    : `<div class="ph-fake" role="img" aria-label="Ảnh sắp có"><img src="${esc(S.brand.logo)}" alt="" loading="lazy"><span>Ảnh sắp có</span></div>`;
 }
+// Giá hiển thị: có phân loại giá khác nhau thì "từ <giá thấp nhất>"; sku.price trống = theo giá sản phẩm
+const skuPrice = (p, s) => s && s.price != null ? s.price : p.price;
+function priceRange(p) {
+  const ps = (p.skus || []).map(s => skuPrice(p, s)).filter(v => v != null);
+  if (!ps.length) return { min: p.price, max: p.price };
+  return { min: Math.min(...ps), max: Math.max(...ps) };
+}
+const priceText = p => { const r = priceRange(p); return r.min != null && r.max !== r.min ? "từ " + money(r.min) : money(r.min); };
 function cardHTML(p) {
   const tags = [p.featured && `<span class="tag">✦ HOT</span>`, p.status === "out" && `<span class="tag out">HẾT HÀNG</span>`].filter(Boolean).join("");
+  const n = (p.skus || []).length;
   return `<article class="win card rv ${p.status === "out" ? "sold" : ""}">
     <a class="ph" href="${link(p)}" target="_blank" rel="noopener" aria-label="${esc(p.name)}">${photo(p)}<div class="tags">${tags}</div></a>
     <div class="bd">
-      <span class="mono" style="color:var(--blue)">${esc(cat(p.category).name)}</span>
+      <span class="mono">${esc(cat(p.category).name)}${n > 1 ? ` · ${n} loại` : ""}</span>
       <h3><a href="${link(p)}" target="_blank" rel="noopener">${esc(p.name)}</a></h3>
-      <div class="price"><b>${money(p.price)}</b></div>
-      <div class="ft"><span class="st ${p.status}">${STATUS[p.status]}</span><button class="btn pink sm" data-buy="${esc(p.id)}">Mua</button></div>
+      <div class="ft"><span class="price"><b>${priceText(p)}</b></span><button class="btn pink sm" data-buy="${esc(p.id)}">Mua</button></div>
     </div></article>`;
 }
 
@@ -41,7 +49,7 @@ function shell() {
     <a class="logo" href="index.html"><img src="${esc(b.logo)}" alt="${esc(b.name)}"><small>${esc(b.slogan)}</small></a>
     <button class="menu-btn" aria-label="Mở menu" aria-expanded="false">☰</button>
     <nav class="nav">
-      <a href="index.html#categories">Danh mục</a><a href="index.html#featured">Đề xuất</a>
+      <a href="index.html#featured">Đề xuất</a>
       <a href="index.html#all">Sản phẩm</a><a href="index.html#faq">Hỏi đáp</a><a href="index.html#contact">Liên hệ</a>
     </nav></div>`;
   const nav = $(".nav"), mb = $(".menu-btn");
@@ -50,8 +58,12 @@ function shell() {
   $("#ft").innerHTML = `<div class="wrap"><img src="${esc(b.logoFooter || b.logo)}" alt="${esc(b.name)}"><span>© ${new Date().getFullYear()} ${esc(b.name)} · ${esc(b.slogan)}</span></div>`;
 
   // Icon social nổi ở góc dưới phải, luôn hiện khi cuộn
+  // Điện thoại chỉ giữ kênh đầu (CSS); ẩn khi khối Liên hệ hoặc chân trang đang hiện để không lặp và không đè
   document.body.insertAdjacentHTML("beforeend", `<nav class="fab" aria-label="Kênh liên hệ">${S.socials.map(s =>
     `<a href="${esc(s.url)}" target="_blank" rel="noopener" aria-label="${esc(s.label)}">${socialIcon(s)}<span>${esc(s.label)}</span></a>`).join("")}</nav>`);
+  const fab = $(".fab"), seen = new Set();
+  const fio = new IntersectionObserver(es => { es.forEach(e => e.isIntersecting ? seen.add(e.target) : seen.delete(e.target)); fab.classList.toggle("off", seen.size > 0); });
+  ["#contact", "#ft"].forEach(q => $(q) && fio.observe($(q)));
 
   // Popup chọn kênh mua: kênh đầu tiên (Instagram) được làm nổi bật
   document.body.insertAdjacentHTML("beforeend", `<div class="modal" id="buy" role="dialog" aria-modal="true" aria-labelledby="buy-t"><div class="win">
@@ -69,9 +81,13 @@ function shell() {
     if (!btn) return;
     const p = S.products.find(x => x.id === btn.dataset.buy);
     last = btn;
-    $("#buy-name").textContent = p.name;
-    const color = $(".swatches input:checked")?.value;
-    const msg = `Chào Umee Lab, mình muốn đặt: ${p.name} (${money(p.price)})${color ? ` - màu ${color}` : ""}`;
+    // Chỉ trang chi tiết có ô chọn phân loại/màu; nút Mua ở thẻ sản phẩm gửi tên chung
+    const onPage = btn.closest(".info");
+    const sku = onPage && (p.skus || []).find(s => s.name === $(".skus input:checked")?.value);
+    const color = onPage && $(".swatches input:checked")?.value;
+    const name = p.name + (sku ? ` - ${sku.name}` : "");
+    $("#buy-name").textContent = name;
+    const msg = `Chào Umee Lab, mình muốn đặt: ${name} (${sku ? money(skuPrice(p, sku)) : priceText(p)})${color ? ` - màu ${color}` : ""}`;
     $("#copied").textContent = "";
     navigator.clipboard?.writeText(msg).then(() => $("#copied").textContent = "✓ Đã copy: " + msg, () => {});
     modal.classList.add("on");
@@ -86,7 +102,22 @@ function reveal() {
     const el = e.target;
     io.unobserve(el);
     el.classList.add("show");
-    setTimeout(() => el.classList.remove("rv", "show"), 750);
-  }), { threshold: .1 });
+    setTimeout(() => el.classList.remove("rv", "show"), 450);
+  }), { rootMargin: "0px 0px 240px 0px" }); // bắt đầu hiện trước khi cuộn tới để không có khoảng trắng
   document.querySelectorAll(".rv:not(.show)").forEach(el => io.observe(el));
+}
+
+// Hàng vuốt ngang: ẩn thanh cuộn, máy tính có nút ‹ › cạnh tiêu đề khi hàng dài hơn khung
+function rails() {
+  document.querySelectorAll(".row").forEach(row => {
+    const hd = row.previousElementSibling;
+    if (!hd || !hd.classList.contains("sec-hd")) return;
+    let nav = $(".rail-nav", hd);
+    if (!nav) {
+      hd.insertAdjacentHTML("beforeend", `<span class="rail-nav"><button aria-label="Xem trước" data-d="-1">‹</button><button aria-label="Xem tiếp" data-d="1">›</button></span>`);
+      nav = $(".rail-nav", hd);
+      nav.onclick = e => { const b = e.target.closest("[data-d]"); if (b) row.scrollBy({ left: b.dataset.d * row.clientWidth * .8, behavior: "smooth" }); };
+      new ResizeObserver(() => nav.hidden = row.scrollWidth <= row.clientWidth + 4).observe(row);
+    }
+  });
 }
